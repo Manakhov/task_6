@@ -36,9 +36,21 @@ def checking_file(file):
     return tag
 
 
+def checking_dir(dir):
+    try:
+        os.mkdir(dir)
+    except FileExistsError:
+        pass
+
+
+checking_dir("new_photo")
+checking_dir("rendered_photo")
 list_file = glob("new_photo/*")
+count = 0
 for file in list_file:
     tag = checking_file(file)
     picture_rendered = rendering_file(file, tag)
     file_rendered = rename_file(file, tag)
     picture_rendered.save(file_rendered)
+    count = count + 1
+print("The program completed. %d files rendered" % count)
